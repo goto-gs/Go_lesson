@@ -1,0 +1,57 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第13回　型変換（キャスト）
+//codeは別ファイルにて管理（どうせあげられないし）
+
+数値の型変換（キャスト）は簡単：
+    int型の値をfloat型にキャストしたり、逆にfloat型をint型にキャストするのは簡単。
+    変換後の型(対象)
+
+    ex)
+    var x int = 1
+	xx := float64(x)
+
+	fmt.Printf("%T %v %f\n", xx, xx, xx)    //float64 1 1.000000が表示される
+
+文字列を数値型にキャストするのは面倒：
+    文字列型で定義された数値”１”をint型に直したい場合、int()は使えない。不便。
+    文字列型を数値型に変換するにはstrconvパッケージのAtoi（）を使用する。
+
+    ex)
+    import "strconv"
+
+    var s string = "14"
+    ii := int(s)  //エラーになる
+	i, _ := strconv.Atoi(s)
+	fmt.Printf("%T %v", i, i)   //int 1が表示される
+
+関数の戻り値に気をつけよう：
+    文字列を数値型にキャストする際に使ったstrconv.Atoi()は、関数の戻り値が int, error の２つ指定されている。
+    両方の値を格納する変数が用意されていない場合、エラーになってしまうので注意が必要。
+    https://godoc.org/strconv#example-Atoi
+
+    ex)
+    var s string = "14"
+	i := strconv.Atoi(s)    //代入する変数(i)が１つしか用意されてないのでエラーになる
+    i,err := strconv.Atoi(s)    //i と err の２つの変数を用意しているのでAtoi()は実行される
+    
+    ただしGo言語の場合、宣言した変数が関数内で一度も使われていない場合はエラーになってしまい実行ができない。
+    よって、先の例で実行させたい場合は以下のような記述をしなければならない。
+
+    ex)
+    import "strconv"
+
+    var s string = "14"
+	i, err := strconv.Atoi(s)
+
+    if err != nil{
+        fmt.Println("ERROR")    //Atoiの戻り値がnil出ない場合”ERROR”を表示する。nilは正常終了時に戻される値のこと。
+    }
+
+	fmt.Printf("%T %v", i, i)
+
+error値のための変数用意するのめんどくさいよね：
+    いちいちエラーの戻り値のための変数を宣言して、且つその変数を関数内で使っていくのはめんどくさい。。
+    そういうときは _ を有効活用するといい。 _ はその値を使用しません。という風に評価されるため、関数内で使われていなくても無視される。
+
+	i, _ := strconv.Atoi(s)     //strconv.Atoi()の戻り値 int, error のうち error を使わない

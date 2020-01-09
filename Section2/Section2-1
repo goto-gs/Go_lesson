@@ -1,0 +1,79 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第３回　MacにGoの開発環境を設定する
+
+Goの公式からダウンロードしよう：
+    講義のバージョンは1.1。
+    Downloadできたらターミナル開く
+    $ go
+    ヘルプが出たらおk
+
+    $echo $GOPATH
+    goのパッケージのディレクトリが表示される予定
+
+    $go get {インストールしたいパッケージ名}
+    パッケージのインストール。今回はgitとbrewを使うのでアカウント作ろう
+
+brewのインストール：
+    brewの公式topにあるコマンドをターミナルで実行
+    $brew
+    でインストール済か確認
+
+gitのインストール：
+    $brew install git
+    gitのインストールが開始される。
+    $git
+    で、インストール済か確認
+
+go getのテスト：
+    https://godoc.org/golang.org/x/tools/cmd/godoc
+    にアクセスして、topにあるURLをコピー。ターミナルにて
+    $go get {コピーしたURL}
+
+    うん。動かないw
+    
+    インストールした後、ホームディレクトリにgoが存在し、
+    $go version
+    を入れると、普通にバージョン表示される。。。
+
+    ディレクトリの問題だろうか。。
+    ググると、何やらGOROOTやらGOPATHの設定が必要とか。
+    めちゃ時間がかかったが、以下のサイトがわかりやすい
+    https://tech.librastudio.co.jp/entry/index.php/2018/02/20/post-1792/
+
+    正直よくわからんくてインストールし直したレベル
+
+IDEのインストール：
+    Golandを使用。２万円払いたくないのでVScodeでやることにした。
+
+新規プロジェクトの作成：
+    待たれよ。
+    サラーっとGo Moduleやら、Depやらを説明やめときますね。で進んだけど、
+    Goland 使ってないから（？）なのか、そのようなものhome/go/srcにございませぬ。。。
+
+    以下サイトが参考になりそう
+    https://qiita.com/mumoshu/items/0d2f2a13c6e9fc8da2a4
+
+    とりあえず無視して進める。
+
+    結果として、golandを使っとけばよかったなー。無料30日で。
+    そしたらプロジェクトの作成からなんからもっとサクサクいっただろうに。
+    しかしワイはvscodeでやったるんや！（金払いたくない）
+
+    というわけで動画後半をまるっとシカトして、以下サイトの情報から環境構築するのであった。
+
+    https://qiita.com/masakurapa/items/fb61b5fc07393059fb28
+
+    ハローワールドできたところで、終了
+    そしてgolintのコメント攻撃鬱陶しい。
+
+    https://blog.haramishio.xyz/entry/learn-with-golint
+
+
+ーーーー
+    
+    
+
+
+
+

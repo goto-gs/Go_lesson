@@ -1,0 +1,31 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第11回　文字列型
+//codeは別ファイルにて管理（どうせあげられないし）
+
+文字列型の結合：
+    文字列をつなげたいときは + を使う
+    fmt.Println("Hello" + "World")  //Hello Worldが表示される
+
+文字列のスライス：
+    文字列からn番目の文字を抜き出したい場合、スライス[n]を使って抜き出すことができる
+    ただしGoの場合、スライスだけだと文字コードで返ってくるので、string()を使ってあげる必要がある。
+
+    fmt.Println("Hello World"[0])   //72が表示される
+	fmt.Println(string("Hello World"[0]))   //Hが表示される
+
+stringsパッケージ：
+    stringsパッケージをimportすると文字列操作の関数が使える
+    https://godoc.org/strings
+
+    import "strings"
+
+	// 置換 (文字列、対象、置換後のもじ、n番目)
+	fmt.Println(strings.Replace(s, "H", "X", 1))
+
+	// 検索（文字列、対象）　true or false
+	fmt.Println(strings.Contains(s, "World"))
+
+ダブルクオートの表示：
+    文字列として ”” を表示したい場合、 ”””　はエラーになるので ＼ を使う。
+    fmt.Println("\"")   //"が表示される

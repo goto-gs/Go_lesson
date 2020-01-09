@@ -1,0 +1,56 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第10回　数値型
+//codeは別ファイルにて管理（どうせあげられないし）
+
+数値型の一覧：
+    //符号なし　整数
+    uint8       the set of all unsigned  8-bit integers (0 to 255)
+    uint16      the set of all unsigned 16-bit integers (0 to 65535)
+    uint32      the set of all unsigned 32-bit integers (0 to 4294967295)
+    uint64      the set of all unsigned 64-bit integers (0 to 18446744073709551615)
+
+    //符号あり　整数
+    int8        the set of all signed  8-bit integers (-128 to 127)
+    int16       the set of all signed 16-bit integers (-32768 to 32767)
+    int32       the set of all signed 32-bit integers (-2147483648 to 2147483647)
+    int64       the set of all signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
+
+    //浮動小数値
+    float32     the set of all IEEE-754 32-bit floating-point numbers
+    float64     the set of all IEEE-754 64-bit floating-point numbers
+
+    //複素数
+    complex64   the set of all complex numbers with float32 real and imaginary parts
+    complex128  the set of all complex numbers with float64 real and imaginary parts
+
+fmt.Printfについて：
+    fmt.Printfは、実行した時に対象の型や値を指定した形式で表示してくれる関数。
+    fmt.Printf( "形式" , 対象)
+
+    ex)
+    var i32 int32 = 123
+    fmt.Printf("%T" , i32)  //int32が表示される
+
+    ＜代表的な形式＞
+    %T  型を表示
+    %v  値を表示
+    %d  base10(10進数)で表示
+    %s  文字列で表示
+
+    また、形式の箇所には複数指定や、他の文字列も含めることができる。
+
+    ex)
+    var i32 int32 = 123
+    fmt.Printf("type=%T value=%v" , i32 , i32)  //type=int32 value=123が表示される
+
+    ちなみに "" じゃなくて '' で囲ったらエラー出たw
+
+簡単な計算：
+    他言語よろしくインクリメントなど共通点多いのであんまり真新しい情報はなし。
+    計算式の結果の型が使われている要素によって変動するところは、当たり前と言えばそうだけど、予期せず型の不一致が起こるかも？
+
+    ex)
+    fmt.Println("10 / 3 =", 10/3)   //3が表示される（int）
+	fmt.Println("10 / 3 =", 10.0/3) //3.3333333333...が表示される(float)
+
