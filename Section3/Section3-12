@@ -1,0 +1,36 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第17回　map
+//codeは別ファイルにて管理（どうせあげられないし）
+
+mapオブジェクトの宣言：
+    mapは、異なる型の値を結びつけるデータ構造。キーと値からなる複数のデータを格納できる
+    mapのキーにはイコール演算子が定められていればどのような型でもキーにすることができるが、スライスや配列はキーにできない。
+    キーの追加は宣言した後からでも追加が可能。
+    
+    map[キーの型]値の型{キー名1:値1,キー名2:値2}
+
+    ex)
+    m := map[string]int{"apple": 100, "banana": 200}
+	fmt.Println(m)  // map[apple:100 banana:200] と表示される
+	fmt.Println(m["apple"]) // 100 と表示される
+	m["banana"] = 300
+	fmt.Println(m)  // map[apple:100 banana:300] と表示される
+	m["new"] = 500
+	fmt.Println(m)  // map[apple:100 banana:300 new:500] と表示される
+
+空のmapの宣言：
+    make関数を使ってメモリ上に空のmapを宣言することもできる
+
+    ex)
+    m2 := make(map[string]int)
+	m2["pc"] = 5000
+	fmt.Println(m2) // map[pc:5000] が表示される
+
+    ただし、以下のような宣言方法の場合は、mapの参照ができないためエラーとなる
+
+    ex)
+    var m3 map[string]int
+    m3["pc"]=5000
+    fmt.Println(m3)
+
