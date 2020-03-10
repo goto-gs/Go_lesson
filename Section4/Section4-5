@@ -1,0 +1,47 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第26回　defer
+//codeは別ファイルにて管理（どうせあげられないし）
+
+関数の実行後に評価されるdefer:
+    deferを指定した行は、関数を実行した後で実行される。
+
+    ex)
+    func deferLesson() {
+        defer fmt.Println("world")  // defer で指定されているため、最後に実行される
+        fmt.Println("hello")   // こちらが先に実行される。結果は hello world となる。
+    }
+
+deferを複数用意した場合の挙動:
+    deferを複数記述した場合、最初に記述した defer が最後に実行される。
+
+    ex)
+    func deferLesson() {
+        defer fmt.Println("world")  // 1番最後に実行される
+        fmt.Println("hello")    // 最初に実行される
+        def()   // run succes 3 2 1 と表示される
+    }
+
+    func def() {
+        fmt.Println("run")
+        defer fmt.Println(1)
+        defer fmt.Println(2)
+        defer fmt.Println(3)
+        fmt.Println("succes")
+    }
+
+file Openと相性の良いdefer:
+    関数の最後に実行される defer は、ファイル操作の関数と相性が良い
+    os パッケージのOpen()メソッドでファイルを開いた場合、処理の終了時にClose()する必要がある。
+    そういったタイミングでdeferを指定しておくと、Close() し忘れを防ぐことができる。
+
+    ex)
+    import "os"
+    func readFile() {
+        file, _ := os.Open("./lesson.go")   // osパッケージのOpenメソッドを使って lesson.go を開く
+        defer file.Close()  // osパッケージのCloseメソッドを使って、処理終了後にファイルを閉じる
+
+        data := make([]byte, 100)   // make を使って、byte型スライスに、長さ キャパシティ 100　を設定する。        
+        file.Read(data)     // Readメソッドを使って、ファイル（lesson.go）から最大len(今回は100)まで読み取り、表示する。
+        fmt.Println(string(data))
+    }
