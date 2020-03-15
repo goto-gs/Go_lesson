@@ -1,0 +1,35 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第27回　log
+//codeは別ファイルにて管理（どうせあげられないし）
+
+logパッケージでエラーの記録：
+    log パッケージは log.print と、 log.fatal がよく使用される。
+    どちらもエラーのlogを表示するためのものだが、Fatalの方は処理を中断し以降のコードを実行しない特性がある。
+
+エラー記録用のログファイルの作成：
+    発生したエラーを記録するようにログファイルを作成する場合、os パッケージと io パッケージを合わせて使うことで生成できる。
+
+    ex)
+    import {
+        "log"
+        "os"
+        "io"
+    }
+
+    func logLesson() {
+        LoggingSetting("test.log")  // logファイル作成用の関数を test.log という引数を持たせて実行
+
+        _, err := os.Open("xxxxx")  // 存在しないファイル xxxxx を開く
+        if err != nil {
+            log.Fatalln("Exit!", err)   // Exit! と表記して処理を中断
+        }
+    }
+
+    func LoggingSetting(logFile string) {
+	logfile, _ := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)   // test.log という名前で読み書き・新規作成・追加を許可して開く
+
+	multiLogFile := io.MultiWriter(os.Stdout, logfile)  // io パッケージの MultiWritter メソッドで test.log に標準出力で書き込み
+	log.SetFlags(log.Ldate | log.Ltime | log.Llongfile) // 日付・時間・ファイルのフルパスを表記するように設定
+	log.SetOutput(multiLogFile)     // test.logに書き出し
+}
