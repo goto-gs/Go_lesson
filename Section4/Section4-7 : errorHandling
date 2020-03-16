@@ -1,0 +1,62 @@
+udemy [現役シリコンバレーエンジニアが教えるGo入門＋応用でビットコインのシストレFintechアプリの開発]
+
+第28回　エラーハンドリング
+//codeは別ファイルにて管理（どうせあげられないし）
+
+エラーハンドリング：
+    go lang のエラーハンドリングは、try catch は使わない。
+    if を使用して、error の戻り値が帰ってきた場合に、 log パッケージの fatal で中断させる。
+    よって、複数回エラーハンドリングの行を書くことになる
+
+    ex)
+
+    import {
+        "os"
+        "log"
+    }
+
+    func errHandling() {
+        file, err := os.Open("./lesson.go") // os パッケージの Open メソッドを使用してlesson.goを開く
+        if err != nil {
+            log.Fatalln("Error!")   // エラーハンドリング err が nilでなければ log パッケージの fatal を使って処理を中断
+        }
+        defer file.Close()  // defer を使って、最後まで処理が進んだらlesson.goを閉じる
+
+        data := make([]byte, 100)   // make を使って byte 配列の長さ、キャパシティ 100 の変数を設定
+        count, err := file.Read(data)   // lesson.goの読み込み。このときerrが上書きされる
+        if err != nil {
+            log.Fatalln("Error!")   // エラーハンドリング err が nilでなければ log パッケージの fatal を使って処理を中断
+        }
+        fmt.Println(count, string(data))    // 100 lesson.goの100byte分の文字列が表示される
+    }
+
+errが再イニシャライズされてもエラーが出ないわけ：
+    変数の宣言時に、ついでに初期化値も入れられる := (ショートデクレラレーション)は、
+    当然既に宣言されている変数に対して使うとエラーが出る。
+
+    しかし、以下の例では複数回 err が初期化されているのに問題なく動く
+
+    ex)
+    import {
+        "os"
+        "log"
+    }
+
+    func errHandling() {
+        file, err := os.Open("./lesson.go") // os パッケージの Open メソッドを使用してlesson.goを開く
+        if err != nil {
+            log.Fatalln("Error!")   // エラーハンドリング err が nilでなければ log パッケージの fatal を使って処理を中断
+        }
+        defer file.Close()  // defer を使って、最後まで処理が進んだらlesson.goを閉じる
+
+        data := make([]byte, 100)   // make を使って byte 配列の長さ、キャパシティ 100 の変数を設定
+        count, err := file.Read(data)   // lesson.goの読み込み。このときerrが上書きされる
+        if err != nil {
+            log.Fatalln("Error!")   // エラーハンドリング err が nilでなければ log パッケージの fatal を使って処理を中断
+        }
+        fmt.Println(count, string(data))    // 100 lesson.goの100byte分の文字列が表示される
+    }
+
+    これは、宣言時に err 単体ではなく count という別の変数も一緒に初期化しているので、エラーにならない。
+    つまり := で初期化する場合は、同時に宣言した変数の中で一つでも新規に初期化される変数があればエラーにならない。
+    このとき err は新規に初期化されているのではなく、上書きされている。
